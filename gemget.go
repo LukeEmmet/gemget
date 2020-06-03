@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	gemini "git.sr.ht/~yotam/go-gemini"
-	"github.com/schollz/progressbar/v3"
 	flag "github.com/spf13/pflag"
 )
 
@@ -69,8 +68,7 @@ func saveFile(resp *gemini.Response, u *url.URL) {
 	if quiet {
 		written, err = io.Copy(f, resp.Body)
 	} else {
-		bar := progressbar.DefaultBytes(-1, "downloading")
-		written, err = io.Copy(io.MultiWriter(f, bar), resp.Body)
+		written, err = io.Copy(io.MultiWriter(f), resp.Body)
 		fmt.Println()
 	}
 	if err != nil {
